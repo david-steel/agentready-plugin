@@ -11,7 +11,7 @@ applies what is safe, and hands off what needs infrastructure or a business deci
 ## Install
 
 ```
-/plugin marketplace add sneezeit/agentready-plugin
+/plugin marketplace add david-steel/agentready-plugin
 /plugin install agentready@agentready
 ```
 
