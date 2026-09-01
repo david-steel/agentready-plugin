@@ -1,0 +1,7 @@
+{
+  "name": "agentready",
+  "description": "Raise a website's Agent Ready score. Audits whether an AI agent can reach, understand, act on and complete a transaction on a site, then fixes what it safely can. Handles codebases and WordPress sites without repo access.",
+  "author": { "name": "Sneeze It", "email": "hello@sneeze.it" },
+  "homepage": "https://agentready.sneeze.it",
+  "license": "MIT"
+}

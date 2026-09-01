@@ -1,0 +1,27 @@
+{
+  "$comment": "Serve at /.well-known/mcp.json. Content-Type: application/json. Replace every {{ }}.",
+  "name": "{{BUSINESS_NAME}}",
+  "description": "{{ONE_LINE_WHAT_YOU_DO}}",
+  "version": "1.0.0",
+  "contact": { "email": "{{EMAIL}}", "url": "{{SITE_URL}}" },
+  "tools": [
+    {
+      "name": "check_availability",
+      "description": "Check open appointment times for a service on a given date.",
+      "surface": "webmcp",
+      "page": "{{BOOKING_PAGE_URL}}"
+    },
+    {
+      "name": "get_price",
+      "description": "Get the current price for a service or product.",
+      "surface": "webmcp",
+      "page": "{{PRICING_PAGE_URL}}"
+    },
+    {
+      "name": "book_appointment",
+      "description": "Book an appointment for a named customer.",
+      "surface": "webmcp",
+      "page": "{{BOOKING_PAGE_URL}}"
+    }
+  ]
+}

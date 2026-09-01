@@ -1,0 +1,28 @@
+# {{BUSINESS_NAME}}
+
+> {{ONE_SENTENCE_WHAT_YOU_DO_AND_FOR_WHOM}}
+
+{{TWO_OR_THREE_SENTENCES: what you sell, who it is for, where you operate.
+Write it plainly. This is read by a machine deciding whether to recommend you.}}
+
+## Services
+- **{{SERVICE_1}}** — {{what it is}}. {{price or "call for pricing"}}.
+- **{{SERVICE_2}}** — {{what it is}}. {{price}}.
+
+## Locations
+- {{LOCATION_NAME}}, {{ADDRESS}} — {{PHONE}} — {{HOURS}}
+
+## Booking
+{{BOOKING_URL}}
+
+## Key pages
+- [Services]({{SERVICES_URL}})
+- [Pricing]({{PRICING_URL}})
+- [Contact]({{CONTACT_URL}})
+- [FAQ]({{FAQ_URL}})
+
+## Facts an assistant should get right
+- {{Anything commonly gotten wrong: service area, what you do NOT do, age limits,
+  membership requirements, parking, insurance accepted.}}
+
+Last updated: {{YYYY-MM-DD}}

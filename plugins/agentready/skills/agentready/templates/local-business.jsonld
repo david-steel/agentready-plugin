@@ -1,0 +1,51 @@
+{
+  "$comment": "Inline in <head> as <script type=\"application/ld+json\">. One per location. Every value must be true.",
+  "@context": "https://schema.org",
+  "@type": "{{LocalBusiness|ExerciseGym|DaySpa|MedicalBusiness|HealthAndBeautyBusiness|ProfessionalService}}",
+  "name": "{{BUSINESS_NAME}}",
+  "url": "{{SITE_URL}}",
+  "telephone": "{{+1-555-555-5555}}",
+  "email": "{{EMAIL}}",
+  "image": "{{LOGO_OR_PHOTO_URL}}",
+  "priceRange": "{{$$}}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{STREET}}",
+    "addressLocality": "{{CITY}}",
+    "addressRegion": "{{STATE}}",
+    "postalCode": "{{ZIP}}",
+    "addressCountry": "US"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": "{{LAT}}", "longitude": "{{LNG}}" },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "{{06:00}}", "closes": "{{21:00}}"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday", "Sunday"],
+      "opens": "{{08:00}}", "closes": "{{18:00}}"
+    }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "{{SERVICE_1}}", "description": "{{DESC}}" },
+        "price": "{{99.00}}", "priceCurrency": "USD"
+      }
+    ]
+  },
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{BOOKING_URL}}",
+      "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
+    }
+  }
+}

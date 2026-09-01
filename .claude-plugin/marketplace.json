@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agentready",
+  "description": "Agent Ready: audit and fix whether an AI agent can reach, understand, act on and complete a transaction on a website.",
+  "owner": {
+    "name": "Sneeze It",
+    "email": "hello@sneeze.it"
+  },
+  "plugins": [
+    {
+      "name": "agentready",
+      "description": "Raise a website's Agent Ready score. Scans with the Agent Ready audit, maps every finding to a concrete edit, applies what is safe, and hands off what needs infrastructure or a business decision. Works on codebases (Next, Astro, Nuxt, Hono, static) and on WordPress sites with no repo access, by generating a drop-in plugin.",
+      "author": { "name": "Sneeze It" },
+      "category": "web",
+      "source": "./plugins/agentready",
+      "homepage": "https://agentready.sneeze.it"
+    }
+  ]
+}
