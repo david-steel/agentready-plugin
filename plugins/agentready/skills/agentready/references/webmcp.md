@@ -19,12 +19,31 @@ So the order is always:
 
 Registering two honest tools scores better and behaves better than registering six hopeful ones.
 
-## The API, and its instability
+## The API, verified
 
-WebMCP shipped February 2026 as a joint Google and Microsoft experiment in Chrome. It is
-experimental and the surface is still moving. `templates/webmcp.js` feature-detects both
-shapes seen so far (`provideContext` and `registerTool`), and no-ops where the API is absent,
-so it is safe to ship on every page today.
+**`document.modelContext`, not `navigator.modelContext`.** The call is
+`registerTool({name, description, inputSchema, execute})`. **There is no `provideContext`.**
+
+Confirmed against Chrome 152 with `--enable-features=WebMCP` on 2026-09-01, by registering
+a tool and reading it back out of `getTools()`:
+
+```
+document.modelContext:  true
+navigator.modelContext: false
+API: registerTool, getTools, executeTool, ontoolchange
+```
+
+This matters more than it sounds. The early write-ups, including the podcast this skill grew
+out of, said `navigator.modelContext` and `provideContext`. Code written to those names
+feature-detects, finds nothing, and returns silently: it looks correct, ships clean, and
+registers nothing at all. Three of our own sites carried exactly that for a day.
+
+`templates/webmcp.js` targets `document` first and keeps `navigator` as a fallback, because
+the spec is still moving, and no-ops where the API is absent so it is safe on every page.
+
+**Playwright's bundled Chromium does not carry WebMCP.** Verifying registration needs real
+Chrome (`channel: 'chrome'`) with the feature flag. A headless check that finds nothing is
+evidence about the browser, not about the site.
 
 Two consequences worth knowing:
 

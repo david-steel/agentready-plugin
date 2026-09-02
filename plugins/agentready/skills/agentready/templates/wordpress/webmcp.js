@@ -10,8 +10,12 @@
  * to arrive at a time nobody is expecting them.
  */
 (function () {
-  var mc = typeof navigator !== 'undefined' && navigator.modelContext;
-  if (!mc) return;
+  // document.modelContext in Chrome 152, verified against real Chrome with
+  // --enable-features=WebMCP on 2026-09-01. navigator is a fallback ONLY: the early
+  // write-ups said navigator, and code targeting it registers nothing at all.
+  var mc = (typeof document !== 'undefined' && document.modelContext)
+        || (typeof navigator !== 'undefined' && navigator.modelContext);
+  if (!mc || typeof mc.registerTool !== 'function') return;
   var cfg = window.AgentReadyConfig || {};
   var root = (cfg.root || '/wp-json/').replace(/\/$/, '/');
 
@@ -51,8 +55,9 @@
   ];
 
   try {
-    if (typeof mc.provideContext === 'function') mc.provideContext({ tools: tools });
-    else if (typeof mc.registerTool === 'function') tools.forEach(function (t) { mc.registerTool(t); });
+    // registerTool({name, description, inputSchema, execute}) is the shape Chrome
+    // accepts. provideContext does not exist on the real API.
+    tools.forEach(function (t) { mc.registerTool(t); });
   } catch (e) {
     if (window.console && console.debug) console.debug('WebMCP registration skipped:', e);
   }
