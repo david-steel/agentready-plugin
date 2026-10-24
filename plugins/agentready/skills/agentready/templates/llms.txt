@@ -21,6 +21,12 @@ Write it plainly. This is read by a machine deciding whether to recommend you.}}
 - [Contact]({{CONTACT_URL}})
 - [FAQ]({{FAQ_URL}})
 
+## Agents
+{{What an agent may do for a customer here, e.g. "Agents may book, reschedule and cancel
+classes for a signed-in member." What needs the customer to confirm (payments, cancelling a
+membership). Where to send the person when the agent cannot finish. Only state what the
+site actually supports.}}
+
 ## Facts an assistant should get right
 - {{Anything commonly gotten wrong: service area, what you do NOT do, age limits,
   membership requirements, parking, insurance accepted.}}
