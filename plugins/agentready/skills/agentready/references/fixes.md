@@ -1,6 +1,6 @@
 # Every check, and the exact fix
 
-17 scored checks, plus 6 Delegate checks in preview. `id` is what `scan.mjs` prints. Class is who can do it.
+Every scored check, across eight areas. `id` is what `scan.mjs` prints. Class is who can do it.
 
 ---
 
@@ -155,11 +155,10 @@ mirror what they do on your own domain.
 
 ---
 
-## DELEGATE (preview, not in the score) — personal agents
+## DELEGATE (20 pts) — personal agents
 
-Shown in every report, excluded from the total and from the fix plan until the scanner sets
-`DELEGATE_SCORED=1`. Work it after the scored pillars, and say it is preview work when you
-report the ceiling. It asks what a customer's OWN agent can do after sign in.
+Counted in the score since 2026-10-24. It asks what a customer's OWN agent can do after
+sign-in.
 
 ### `agent_identity` — 4 pts — INFRA
 The scanner re-requests the homepage signed with Web Bot Auth (RFC 9421 HTTP Message
@@ -203,6 +202,44 @@ e.g. `Content-Signal: search=yes, ai-input=yes, ai-train=no`. The values are the
 call, same as training crawlers. Ask.
 
 ---
+
+## ACCURATE (15 pts) — do the facts agree
+
+Compares structured data against the visible page, and llms.txt against both. A fact stated
+in only one place passes; whether it is stated at all is Comprehend's job. Skips when there
+is nothing to compare.
+
+### `phone_agrees`, `address_agrees`, `hours_agree`, `prices_agree` — 3 pts each — AGENT
+The JSON-LD says one thing, the page another. **Ask the owner which is true. Never pick one
+yourself** — a wrong phone or hours is worse than a missing one. Then make the JSON-LD match
+the page (or the page match the truth). Hours: only times printed next to "hours", "open" or
+day names count, so class times are not the problem. Prices: only amounts written as a price
+("$49/mo", "from $99"). Usual cause: a moved location, an old number, seasonal hours, a
+retired offer left in the data. Best fix: generate the JSON-LD from the same source as the page.
+
+### `llms_agrees` — 3 pts — AGENT
+llms.txt has a phone or ZIP that is nowhere else. Correct llms.txt with the owner's confirmation.
+
+## LOCATIONS (20 pts) — multi-location brands only
+
+Skipped for single-location businesses. A map-only locator is the common failure.
+
+### `locator_links` — 6 pts — AGENT or DECISION
+Under the map, add a plain HTML list of every location, each a normal `<a href>` to its own
+page. Keep the map. Server-render the list; a list drawn by the map widget does not count.
+
+### `location_page` — 4 pts — AGENT
+Each location at a stable URL (`/locations/aiken`) with address, a `tel:` link and hours in
+the HTML.
+
+### `location_schema` — 6 pts — AGENT
+On every location page: `LocalBusiness` JSON-LD (or `ExerciseGym`, `HealthClub`, `DaySpa`)
+with its own `address`, `telephone` and `openingHoursSpecification`, 2 pts each. Generate it
+from the location record so it cannot drift. Never invent hours.
+
+### `locations_sitemap` — 4 pts — AGENT
+List every location page in sitemap.xml, or in a locations sitemap named in the sitemap
+index (and ideally in robots.txt as a `Sitemap:` line).
 
 ## The order to work in
 
