@@ -36,7 +36,7 @@ if (r.measuredBehindWall) console.log(`  Everything past Reach was measured thro
 console.log('')
 for (const p of r.pillars) {
   const s = p.applicable ? `${String(p.score).padStart(3)}/100 ${bar(p.score)}` : '    not scored'
-  console.log(`  ${p.label.padEnd(11)} ${s}   weight ${p.weight}`)
+  console.log(`  ${p.label.padEnd(11)} ${s}   ${p.preview ? 'preview, not in score' : `weight ${p.weight}`}`)
 }
 
 // Everything not passing, with the points on the table, so the agent can prioritise.

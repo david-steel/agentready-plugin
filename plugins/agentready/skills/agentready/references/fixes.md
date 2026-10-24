@@ -1,6 +1,6 @@
 # Every check, and the exact fix
 
-17 checks. `id` is what `scan.mjs` prints. Class is who can do it.
+17 scored checks, plus 6 Delegate checks in preview. `id` is what `scan.mjs` prints. Class is who can do it.
 
 ---
 
@@ -143,6 +143,8 @@ Record the decision in the report.
 
 ### `no_login_wall` — 3 pts — DECISION
 Prices and services behind auth. Gate the transaction, not the shop window. Owner's call.
+A page that really is account-only passes once the site publishes OAuth discovery (see
+`delegated_auth`), because then the sign in is a door an agent can be let through.
 
 ### `stable_to_repeat` — 3 pts — INFRA
 Rate limited on a second request. Raise the threshold for verified agent traffic.
@@ -150,6 +152,55 @@ Rate limited on a second request. Raise the threshold for verified agent traffic
 ### `iframe_dependency` — 3 pts — AGENT or DECISION
 Three or more iframes, or two or more third party services. Reduce on conversion pages, or
 mirror what they do on your own domain.
+
+---
+
+## DELEGATE (preview, not in the score) — personal agents
+
+Shown in every report, excluded from the total and from the fix plan until the scanner sets
+`DELEGATE_SCORED=1`. Work it after the scored pillars, and say it is preview work when you
+report the ceiling. It asks what a customer's OWN agent can do after sign in.
+
+### `agent_identity` — 4 pts — INFRA
+The scanner re-requests the homepage signed with Web Bot Auth (RFC 9421 HTTP Message
+Signatures, Ed25519, `Signature-Agent` header, key directory at
+`/.well-known/http-message-signatures-directory`). Refused = the WAF blocks agents whether or
+not they prove who they are. Fix in the WAF: verify signed agents and let them through
+(Cloudflare: Bots, signed agents). Owner or whoever runs the WAF must action.
+
+### `delegated_auth` — 4 pts — AGENT where an auth server exists, else DECISION
+Only scored where customers have accounts. Needs, at the site root:
+- `/.well-known/oauth-protected-resource` (RFC 9728): `resource`, `authorization_servers`
+- `/.well-known/oauth-authorization-server` (RFC 8414) with `authorization_endpoint`,
+  `token_endpoint`, `code_challenge_methods_supported: ["S256"]`, and `registration_endpoint`
+  (or `client_id_metadata_document_supported: true`)
+This is the MCP connector auth flow, so if the site already runs an MCP server with OAuth
+the documents usually exist on that server and only need serving from the root. **Never
+publish discovery for an auth server that does not exist.** No auth server = DECISION.
+
+### `agent_login` — 4 pts — AGENT (own form) or INFRA (hosted widget)
+On the sign in page: identifier input `autocomplete="username"` (or `"email"`; add
+` webauthn` when passkeys are on), password `autocomplete="current-password"`, a passkey or
+one-time code option, no captcha. Clerk, Auth0 and similar widgets: set it in the provider's
+config or appearance options, do not patch their DOM. Passkeys are a provider setting.
+
+### `account_actions` — 3 pts — AGENT, with the same precondition as `webmcp_tools`
+Tools that act on the signed in account: list my bookings, reschedule, cancel, order status,
+update contact details. Register as WebMCP tools (they run in the customer's own session) and
+list them in `/.well-known/mcp.json`. **Each tool must call a real endpoint that already
+enforces the session.** Anything that costs money or ends a membership must ask the person
+to confirm. A self-service link ("Manage my booking") earns 1 pt on its own.
+
+### `accessible_controls` — 3 pts — AGENT
+Every `<a href>` and `<button>` needs an accessible name: text, `aria-label`, or an `<img alt>`
+or `<svg><title>` inside. Replace `<div onclick>` with `<button>`. Icon buttons and social
+links are the usual offenders. Also an accessibility fix, say so.
+
+### `agent_policy` — 2 pts — AGENT for llms.txt, DECISION for the signal values
+1 pt: a `## Agents` section in llms.txt (see `templates/llms.txt`) saying what an agent may
+do for a customer and what needs confirming. 1 pt: a `Content-Signal:` line in robots.txt,
+e.g. `Content-Signal: search=yes, ai-input=yes, ai-train=no`. The values are the owner's
+call, same as training crawlers. Ask.
 
 ---
 
