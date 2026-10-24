@@ -152,8 +152,9 @@ no_js_content                   +7  DECISION   SPA renders empty, needs SSR, ~2 
   With INFRA: 85.  With the SSR decision: 92.
 ```
 
-Delegate findings (personal agents) are preview: list them in a separate block under the
-table, and do not count them in the ceiling. See the DELEGATE section of `references/fixes.md`.
+Delegate (personal agents), Accurate (facts agree) and Locations (multi-location brands)
+are scored like everything else; see their sections in `references/fixes.md`. For Accurate,
+never decide which of two conflicting facts is true: ask the owner.
 
 Then get a go-ahead before Phase 3 unless `--fix` was passed.
 
